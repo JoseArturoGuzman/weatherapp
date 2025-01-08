@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:weatherapp/screens/city_screen.dart';
+import 'package:weatherapp/services/weather.dart';
 
 import 'package:weatherapp/utilities/constants.dart';
 
@@ -6,6 +8,9 @@ class LocationScreen extends StatefulWidget {
   @override
   _LocationScreenState createState() => _LocationScreenState();
 }
+
+
+final weather = WeatherModel();
 
 
 class _LocationScreenState extends State<LocationScreen> {
@@ -33,14 +38,25 @@ class _LocationScreenState extends State<LocationScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   TextButton(
-                    onPressed: () {},
+                    onPressed:  () async {
+
+                      var result = await weather.getWeatherData();
+                    },
                     child: Icon(
                       Icons.near_me,
                       size: 50.0,
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: ()  async {
+                     var cityName =  await Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return CityScreen();
+                      },),);
+                     if(cityName !=null){
+
+                       var result = await weather.getWeatherDataByCity(cityName);
+                     }
+                    },
                     child: Icon(
                       Icons.location_city,
                       size: 50.0,

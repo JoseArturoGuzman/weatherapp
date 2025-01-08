@@ -4,12 +4,22 @@ import 'package:weatherapp/services/networking.dart';
 class WeatherModel {
 
   final String baseUrl = 'https://api.openweathermap.org/data/2.5/weather?';
-  final String apiKey = '';
+  final String apiKey = '7f28a317e96eacc77dc598b551f96fe3';
+
+  Future<dynamic> getWeatherDataByCity( String cityName) async{
+
+
+    Networking networking = Networking(url:'$baseUrl?q=${cityName}&appid=${apiKey}&units=metric' );
+    var weatherData = await networking.getData();
+    return weatherData;
+
+  }
+
   Future<dynamic> getWeatherData() async{
     Location location = Location();
     await location.getCurrentPosition();
 
-    Networking networking = Networking(url:'$baseUrl?late=${location.latitude}&lon=${location.longitude}&appid=${apiKey}' );
+    Networking networking = Networking(url:'$baseUrl?late=${location.latitude}&lon=${location.longitude}&appid=${apiKey}&units=metric' );
     var weatherData = await networking.getData();
     return weatherData;
 
